@@ -51,6 +51,17 @@ public final class JavaKMeans {
   public static void main(String[] args) {
     if (args.length < 3) {
       System.err.println(
+    /** numClusters = 3; //预测分为3个簇类
+                  numIterations = 20; //迭代20次
+                  runs = 10; //运行10次，选出最优解
+                  
+         K-Means属于无监督学习，最大的特别和优势在于模型的建立不需要训练数据。
+                  在日常工作中，很多情况下没有办法事先获取到有效的训练数据，这时采用K-Means是一个不错的选择。
+                  但K-Means需要预先设置有多少个簇类（K值），这对于像计算某省份全部电信用户的交往圈这样的场景
+                  就完全的没办法用K-Means进行。
+                  对于可以确定K值不会太大但不明确精确的K值的场景，可以进行迭代运算，然后找出cost最小时所对应的K值，
+                  这个值往往能较好的描述有多少个簇类
+                  */
         "Usage: JavaKMeans <input_file> <k> <max_iterations> [<runs>]");
       System.exit(1);
     }
