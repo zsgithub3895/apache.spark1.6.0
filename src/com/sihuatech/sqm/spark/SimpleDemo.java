@@ -4,6 +4,7 @@ package com.sihuatech.sqm.spark;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -15,12 +16,38 @@ import com.sihuatech.sqm.spark.bean.LagPhaseBehaviorLog;
 
 public class SimpleDemo {
     public static void main(String[] args) {
-        SparkConf conf = new SparkConf().setAppName("simpledemo").setMaster("local[2]");
+      /*  SparkConf conf = new SparkConf().setAppName("simpledemo").setMaster("local[2]");
         JavaSparkContext sc = new JavaSparkContext(conf);
         SQLContext sqlCtx = new SQLContext(sc);
-        testUDF(sc, sqlCtx);
+        testUDF2(sc, sqlCtx);
         sc.stop();
-        sc.close();
+        sc.close();*/
+    	
+    	/*String s = "12#22#33#44";
+		System.out.println(s.substring(0,s.lastIndexOf("#")));*/
+    		/*int i=3;
+    		System.out.println(i--);
+    		System.out.println(i);
+    		System.out.println(--i);*/
+    	
+    		/*float f = 1.39e-1f;
+    		double d = 1.39e-1d;
+    		System.out.println(f);
+    		System.out.println(d);*/
+    	
+    	/*int b1 = 5;
+    	int bb = 10;
+    	//System.out.println(Integer.toBinaryString(b1));
+    	System.out.println(8>>1);
+    	System.out.println(8<<1);*/
+    	for(int i=0;i<10;i++){
+    		if(i==5){
+        		return;
+        	}else{
+        		System.out.println(i);
+        	}
+    	}
+    	
     }
 
 
@@ -50,4 +77,35 @@ public class SimpleDemo {
         DataFrame results = sqlCtx.sql("SELECT avg(hasID),deviceProvider FROM acc group by deviceProvider");
         results.show();
     }
+    
+    //测试spark sql的自定义函数
+    public static void testUDF2(JavaSparkContext sc, SQLContext sqlContext) {
+    	String[] dimension = {"provinceID", "platform","deviceProvider", "fwVersion"};
+    	int num = 0;
+		while (num < Math.pow(2, dimension.length)) {
+			StringBuffer groupSb = new StringBuffer();
+			StringBuffer selectSb = new StringBuffer();
+			String numStr = "";
+			for (int i = 0; i < dimension.length; i++) {
+				// 二进制从低位到高位取值
+				int bit = (num >> i) & 1;
+				numStr += bit;
+				if (bit == 1) {
+					selectSb.append(dimension[i]).append(",");
+					groupSb.append(dimension[i]).append(",");
+				} else {
+					selectSb.append("'ALL'").append(",");
+				}
+			}
+			String sql = null;
+			if (StringUtils.isBlank(groupSb.toString())) {
+				sql = "select avg(latency)," + selectSb.substring(0, selectSb.length()-1) + "  from PlayResponseLog ";
+			}else {
+				sql = "select avg(latency)," + selectSb.substring(0, selectSb.length()-1) + "  from PlayResponseLog group by " + groupSb.substring(0, groupSb.length() - 1);
+			}
+			System.out.println(num+"+++++"+sql);
+			num++;
+			
+    }
+}
 }

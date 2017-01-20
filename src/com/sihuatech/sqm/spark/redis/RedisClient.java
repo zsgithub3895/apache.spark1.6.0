@@ -18,10 +18,11 @@ import redis.clients.jedis.JedisCluster;
 
 public class RedisClient {
 	private List<RedisEntity> redisEntityList = new ArrayList<RedisEntity>();
-	private JedisCluster jedisCluster;
+	public JedisCluster jedisCluster;
 
-	private static final Logger logger = Logger.getLogger(RedisClient.class);
+	//private static final Logger logger = Logger.getLogger(RedisClient.class);
 
+	
 	/**
 	 * 获取连接，可以重试一次
 	 * 
@@ -32,14 +33,14 @@ public class RedisClient {
 			this.getJedisCluster().get("".getBytes());
 			return this.getJedisCluster();
 		} catch (Exception e) {
-			logger.error("获取redis连接失败！重新连接", e);
+			//logger.error("获取redis连接失败！重新连接", e);
 			initJedisCluster();
 		}
 		try {
 			this.getJedisCluster().get("".getBytes());
 			return this.getJedisCluster();
 		} catch (Exception e) {
-			logger.error("获取redis连接失败!", e);
+			//logger.error("获取redis连接失败!", e);
 		}
 		return null;
 	}
@@ -57,7 +58,7 @@ public class RedisClient {
 			jedisCluster = this.getJedisClusterInstance();
 			return jedisCluster.get(key);
 		} catch (Exception e) {
-			logger.error("redis处理出错", e);
+			//logger.error("redis处理出错", e);
 		}
 		return null;
 	}
@@ -75,7 +76,7 @@ public class RedisClient {
 			jedisCluster.set(key, object.toString());
 			return true;
 		} catch (Exception e) {
-			logger.error("获取redis连接失败!", e);
+		//	logger.error("获取redis连接失败!", e);
 		}
 		return false;
 	}
@@ -99,11 +100,11 @@ public class RedisClient {
 				jedisCluster.set(key.getBytes(), SerializeUtil.serialize(object));
 				return true;
 			} catch (Exception e) {
-				logger.error("获取redis连接失败!", e);
+				//logger.error("获取redis连接失败!", e);
 			}
 			return false;
 		} else {
-			logger.error("object没有implements Serializable接口");
+			//logger.error("object没有implements Serializable接口");
 			return false;
 		}
 	}
@@ -122,7 +123,7 @@ public class RedisClient {
 			byte[] value = jedisCluster.get(key.getBytes());
 			return SerializeUtil.unserialize(value);
 		} catch (Exception e) {
-			logger.error("redis处理出错", e);
+			//logger.error("redis处理出错", e);
 		}
 		return null;
 	}
@@ -144,7 +145,7 @@ public class RedisClient {
 				return false;
 			}
 		} catch (Exception e) {
-			logger.error("redis处理出错", e);
+			//logger.error("redis处理出错", e);
 		}
 		return false;
 	}
@@ -166,7 +167,7 @@ public class RedisClient {
 				return false;
 			}
 		} catch (Exception e) {
-			logger.error("redis处理出错", e);
+			//logger.error("redis处理出错", e);
 		}
 		return false;
 	}
@@ -184,7 +185,7 @@ public class RedisClient {
 			binaryJedisCluster.del(key.getBytes());
 			return true;
 		} catch (Exception e) {
-			logger.error("redis处理出错", e);
+		//	logger.error("redis处理出错", e);
 		}
 		return false;
 	}
@@ -202,7 +203,7 @@ public class RedisClient {
 			binaryJedisCluster.del(key);
 			return true;
 		} catch (Exception e) {
-			logger.error("redis处理出错", e);
+			//logger.error("redis处理出错", e);
 		}
 		return false;
 	}

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class PropHelper {
-	public static final Logger log = LoggerFactory.getLogger(PropHelper.class);
+	//public static final Logger log = LoggerFactory.getLogger(PropHelper.class);
 	public static Properties props = new Properties();
 	static {
 		File conf = new File("config.properties");
@@ -63,7 +63,7 @@ public class PropHelper {
 			s += (String) entry.getKey() + " = " + (String) entry.getValue()
 					+ "\n";
 		}
-		log.info(s);
+		//log.info(s);
 	}
 	
 	public static void main(String[] args){

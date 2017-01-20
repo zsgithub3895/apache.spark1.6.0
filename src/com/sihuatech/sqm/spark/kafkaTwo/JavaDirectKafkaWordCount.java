@@ -49,7 +49,7 @@ public class JavaDirectKafkaWordCount  {
 
 		Set<String> topicsSet = new HashSet<>(Arrays.asList(topics.split(",")));
 		Map<String, String> kafkaParams = new HashMap<>();
-		kafkaParams.put("metadata.broker.list", brokers);//10.223.138.14:9092
+		kafkaParams.put("metadata.broker.list", brokers);//10.223.138.141:9092
 
 		// Create direct kafka stream with brokers and topics
 		JavaPairInputDStream<String, String> messages = KafkaUtils.createDirectStream(jssc, String.class, String.class,
