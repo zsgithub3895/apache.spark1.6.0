@@ -24,20 +24,20 @@ public class TextFileTest {
 	}
 
 	private static Employee[] readData(Scanner in) {
-		 int n = in.nextInt();
-		 //in.nextLine();
-		 Employee[] emGet = new Employee[n];
+		 int n = in.nextInt();//在调用了nextInt()后，我们可以先调用一次nextLine(),将该行剩下的内容抛弃；
+		 in.nextLine();
+		 Employee[] employees = new Employee[n];
 		 for(int i=0;i<n;i++){
 			 String emDate = in.nextLine();
-			 Employee employee = emGet[i];
+			 employees[i] = new Employee();
 			 String[] value = emDate.split("\\|");
-			 employee.setName(value[0]);
-			 employee.setSalary(Integer.valueOf(value[1]));
-			 employee.setYear(Integer.valueOf(value[2]));
-			 employee.setMonth(Integer.valueOf(value[3]));
-			 employee.setDay(Integer.valueOf(value[4]));
+			 employees[i].setName(value[0]);
+			 employees[i].setSalary(Integer.valueOf(value[1]));
+			 employees[i].setYear(Integer.valueOf(value[2]));
+			 employees[i].setMonth(Integer.valueOf(value[3]));
+			 employees[i].setDay(Integer.valueOf(value[4]));
 		 }
-		 return emGet;
+		 return employees;
 	}
 
 	private static void writeData(Employee[] em, PrintWriter out) {
